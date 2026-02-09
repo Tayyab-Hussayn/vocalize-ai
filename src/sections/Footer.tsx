@@ -56,7 +56,7 @@ export function Footer() {
                 <Mic className="w-5 h-5 text-white" />
               </div>
               <span className="text-xl font-bold text-gray-900">
-                Voice<span className="text-[#453478]">AI</span>
+                Vocalise<span className="text-[#453478]">AI</span>
               </span>
             </motion.a>
             <p className="text-gray-600 mb-6 max-w-sm leading-relaxed">
@@ -165,7 +165,7 @@ export function Footer() {
               © {new Date().getFullYear()} VoiceAI. All rights reserved.
             </p>
             <p className="text-sm text-gray-500 flex items-center gap-1">
-              Made with <Heart className="w-4 h-4 text-red-500 fill-red-500" /> using Edge-TTS
+              Made with <Heart className="w-4 h-4 text-red-500 fill-red-500" /> by Tayyab hussayn
             </p>
           </div>
         </div>
