@@ -61,7 +61,7 @@ export function Hero({ onTryNowClick }: HeroProps) {
       >
         {/* Badge */}
         <motion.div variants={itemVariants} className="mb-8">
-          <span className="inline-flex items-center gap-2 px-4 py-2 mt-4 rounded-full bg-[#EDE9F5] text-[#453478] text-sm font-medium">
+          <span className="inline-flex items-center gap-2 px-4 py-2 mt-7 rounded-full bg-[#EDE9F5] text-[#453478] text-sm font-medium">
             <Sparkles className="w-4 h-4" />
             Free AI Text-to-Speech for Creators
           </span>
