@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 10%;
+    --primary: 258 43% 34%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 260 33% 95%;
+    --secondary-foreground: 258 43% 34%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
+    --accent: 260 33% 95%;
+    --accent-foreground: 258 43% 34%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 258 43% 34%;
+    --radius: 1rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-white text-gray-900 antialiased;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+}
+
+@layer components {
+  /* Primary Button */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 bg-[#453478] hover:bg-[#5A4491] text-white font-semibold rounded-full px-8 py-3 shadow-md shadow-purple-200/40 transition-all duration-200;
+  }
+  
+  .btn-primary:hover {
+    @apply shadow-lg shadow-purple-200/50 -translate-y-0.5;
+  }
+  
+  /* Secondary Button */
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 bg-white border-2 border-[#453478] text-[#453478] font-semibold rounded-full px-8 py-3 hover:bg-[#EDE9F5] transition-all duration-200;
+  }
+  
+  /* Ghost Button */
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 text-[#453478] font-medium rounded-full px-6 py-2 hover:bg-[#EDE9F5] transition-all duration-200;
+  }
+  
+  /* Main Card */
+  .card-main {
+    @apply bg-white rounded-3xl border border-gray-200 shadow-lg shadow-purple-100/50 p-8;
+  }
+  
+  .card-main:hover {
+    @apply shadow-xl shadow-purple-200/60;
+  }
+  
+  /* Nested Card */
+  .card-nested {
+    @apply bg-gray-50 rounded-2xl border border-gray-100 p-6;
+  }
+  
+  /* Input Styles */
+  .input-primary {
+    @apply bg-white border-2 border-gray-200 rounded-2xl px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:border-[#453478] focus:ring-4 focus:ring-purple-100 focus:outline-none transition-all duration-200;
+  }
+  
+  /* Icon Container */
+  .icon-container {
+    @apply bg-[#EDE9F5] rounded-2xl p-4 w-16 h-16 flex items-center justify-center;
+  }
+  
+  /* Section Container */
+  .section-container {
+    @apply w-full px-4 sm:px-6 lg:px-8 xl:px-12;
+  }
+  
+  /* Purple Accent Text */
+  .text-accent {
+    @apply text-[#453478];
+  }
+  
+  /* Purple Background Light */
+  .bg-accent-light {
+    @apply bg-[#EDE9F5];
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Focus styles for accessibility */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  @apply outline-none ring-4 ring-purple-100 ring-offset-2 ring-offset-white;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Custom scrollbar */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: #D1D5DB transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #D1D5DB;
+  border-radius: 3px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: #9CA3AF;
+}

@@ -1,0 +1,69 @@
+# -----------------------------
+# OS & Editor
+# -----------------------------
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# -----------------------------
+# Node / Vite (Frontend)
+# -----------------------------
+node_modules/
+dist/
+.vite/
+.env
+.env.*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# -----------------------------
+# Python / FastAPI (Backend)
+# -----------------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Pytest / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# FastAPI runtime
+*.log
+*.sqlite3
+
+# -----------------------------
+# Environment files (important)
+# -----------------------------
+backend/.env
+frontend/.env
+
+# -----------------------------
+# Migrations (if using Alembic)
+# -----------------------------
+alembic/versions/__pycache__/
+
+# -----------------------------
+# Docker (optional)
+# -----------------------------
+docker-compose.override.yml
+
+# -----------------------------
+# Misc
+# -----------------------------
+*.swp
+*.swo

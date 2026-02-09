@@ -1,0 +1,16 @@
+# VoiceAI Backend Dependencies
+# FastAPI framework
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+
+# Edge-TTS for text-to-speech
+edge-tts>=6.1.0
+
+# Data validation
+pydantic>=2.5.0
+
+# CORS support
+python-multipart>=0.0.6
+
+# Optional: For production deployment
+gunicorn>=21.2.0
