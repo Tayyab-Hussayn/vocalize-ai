@@ -26,10 +26,11 @@ app = FastAPI(
 
 # CORS middleware
 # Get allowed origins from environment variable or use defaults
-ALLOWED_ORIGINS = os.getenv(
+allowed_origins_str = os.getenv(
     "ALLOWED_ORIGINS",
-    "https://your-vercel-app.vercel.app,http://localhost:5173"
-).split(",")
+    "https://vocalise.vercel.app,http://localhost:5173"
+)
+ALLOWED_ORIGINS = [origin.strip() for origin in allowed_origins_str.split(",")]
 
 app.add_middleware(
     CORSMiddleware,
@@ -394,7 +395,11 @@ async def generate_tts_stream(request: TTSRequest):
 @app.get("/health")
 async def health_check():
     """Health check endpoint"""
-    return {"status": "healthy", "service": "voiceai-api"}
+    return {
+        "status": "healthy", 
+        "service": "voiceai-api",
+        "allowed_origins": ALLOWED_ORIGINS
+    }
 
 
 # ============== Main ==============
