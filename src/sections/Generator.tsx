@@ -22,7 +22,9 @@ import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
@@ -34,7 +36,7 @@ const MAX_CHARS = 5000;
 
 export function Generator() {
   const [text, setText] = useState('');
-  const [selectedVoice, setSelectedVoice] = useState('en-US-AriaNeural');
+  const [selectedVoice, setSelectedVoice] = useState('en-US-GuyNeural'); // Default to male voice
   const [rate, setRate] = useState([1]);
   const [pitch, setPitch] = useState([1]);
   const [volume, setVolume] = useState([1]);
@@ -46,6 +48,10 @@ export function Generator() {
   
   const generatorRef = useRef<HTMLDivElement>(null);
   const { generateSpeech, fetchVoices, isGenerating, error, voices, history, removeFromHistory, useWebSpeech } = useTTS();
+
+  // Separate voices by gender
+  const maleVoices = voices.filter(v => v.gender === 'male');
+  const femaleVoices = voices.filter(v => v.gender === 'female');
 
   useEffect(() => {
     fetchVoices();
@@ -263,19 +269,45 @@ export function Generator() {
                     <SelectValue placeholder="Choose a voice" />
                   </SelectTrigger>
                   <SelectContent className="bg-white border border-gray-200 rounded-2xl max-h-72">
-                    {voices.map((voice) => (
-                      <SelectItem
-                        key={voice.id}
-                        value={voice.id}
-                        className="text-gray-900 hover:bg-[#EDE9F5] focus:bg-[#EDE9F5] rounded-xl mx-1 my-0.5"
-                      >
-                        <div className="flex items-center gap-2">
-                          <span className={`w-2 h-2 rounded-full ${voice.gender === 'female' ? 'bg-pink-400' : 'bg-blue-400'}`} />
-                          <span>{voice.name}</span>
-                          <span className="text-gray-400 text-xs">({voice.accent})</span>
-                        </div>
-                      </SelectItem>
-                    ))}
+                    {/* Male Voices Section */}
+                    {maleVoices.length > 0 && (
+                      <SelectGroup>
+                        <SelectLabel className="text-blue-600 font-semibold">Male Voices</SelectLabel>
+                        {maleVoices.map((voice) => (
+                          <SelectItem
+                            key={voice.id}
+                            value={voice.id}
+                            className="text-gray-900 hover:bg-[#EDE9F5] focus:bg-[#EDE9F5] rounded-xl mx-1 my-0.5"
+                          >
+                            <div className="flex items-center gap-2">
+                              <span className="w-2 h-2 rounded-full bg-blue-400" />
+                              <span>{voice.name}</span>
+                              <span className="text-gray-400 text-xs">({voice.accent})</span>
+                            </div>
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    )}
+                    
+                    {/* Female Voices Section */}
+                    {femaleVoices.length > 0 && (
+                      <SelectGroup>
+                        <SelectLabel className="text-pink-600 font-semibold">Female Voices</SelectLabel>
+                        {femaleVoices.map((voice) => (
+                          <SelectItem
+                            key={voice.id}
+                            value={voice.id}
+                            className="text-gray-900 hover:bg-[#EDE9F5] focus:bg-[#EDE9F5] rounded-xl mx-1 my-0.5"
+                          >
+                            <div className="flex items-center gap-2">
+                              <span className="w-2 h-2 rounded-full bg-pink-400" />
+                              <span>{voice.name}</span>
+                              <span className="text-gray-400 text-xs">({voice.accent})</span>
+                            </div>
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    )}
                   </SelectContent>
                 </Select>
                 {selectedVoiceData && (
