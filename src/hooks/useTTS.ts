@@ -4,19 +4,8 @@ import type { TTSRequest, TTSResponse, Voice, GenerationHistory } from '@/types'
 // API Base URL - uses environment variable or defaults to localhost
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
-// Default voices in case API fails
-const DEFAULT_VOICES: Voice[] = [
-  { id: 'en-US-AriaNeural', name: 'Aria', gender: 'female', accent: 'American', language: 'English (US)' },
-  { id: 'en-US-GuyNeural', name: 'Guy', gender: 'male', accent: 'American', language: 'English (US)' },
-  { id: 'en-US-JennyNeural', name: 'Jenny', gender: 'female', accent: 'American', language: 'English (US)' },
-  { id: 'en-GB-SoniaNeural', name: 'Sonia', gender: 'female', accent: 'British', language: 'English (UK)' },
-  { id: 'en-GB-RyanNeural', name: 'Ryan', gender: 'male', accent: 'British', language: 'English (UK)' },
-  { id: 'en-AU-NatashaNeural', name: 'Natasha', gender: 'female', accent: 'Australian', language: 'English (AU)' },
-  { id: 'en-CA-ClaraNeural', name: 'Clara', gender: 'female', accent: 'Canadian', language: 'English (CA)' },
-  { id: 'en-IN-NeerjaNeural', name: 'Neerja', gender: 'female', accent: 'Indian', language: 'English (IN)' },
-  { id: 'en-IE-EmilyNeural', name: 'Emily', gender: 'female', accent: 'Irish', language: 'English (IE)' },
-  { id: 'en-ZA-LeahNeural', name: 'Leah', gender: 'female', accent: 'South African', language: 'English (ZA)' },
-];
+// Default voices - empty array, will be populated from API
+const DEFAULT_VOICES: Voice[] = [];
 
 // Check if Web Speech API is available
 const isWebSpeechAvailable = () => {
@@ -30,7 +19,8 @@ const getWebSpeechVoices = (): Voice[] => {
   const synth = window.speechSynthesis;
   const voices = synth.getVoices();
   
-  return voices.slice(0, 20).map((v, i) => ({
+  // Return ALL voices, not just 20
+  return voices.map((v, i) => ({
     id: `webspeech-${i}`,
     name: v.name.split(' ')[0] || v.name,
     gender: v.name.toLowerCase().includes('female') ? 'female' : 'male',
@@ -110,16 +100,22 @@ export function useTTS() {
       if (Array.isArray(data) && data.length > 0) {
         setVoices(data);
         setUseWebSpeech(false);
+        console.log(`✅ Loaded ${data.length} voices from backend`);
+      } else {
+        throw new Error('No voices returned from API');
       }
     } catch (err) {
-      console.warn('Could not fetch voices from backend, using Web Speech API:', err);
+      console.error('Could not fetch voices from backend:', err);
       // Fall back to Web Speech API voices
       if (isWebSpeechAvailable()) {
         const webSpeechVoices = getWebSpeechVoices();
         if (webSpeechVoices.length > 0) {
           setVoices(webSpeechVoices);
           setUseWebSpeech(true);
+          console.log(`⚠️ Using ${webSpeechVoices.length} Web Speech API voices as fallback`);
         }
+      } else {
+        console.error('❌ No voices available');
       }
     }
   }, []);
