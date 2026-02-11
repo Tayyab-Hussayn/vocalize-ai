@@ -272,8 +272,9 @@ export function Generator() {
                   Select Voice
                 </label>
                 
-                {/* Male Voices Dropdown */}
-                <div className="space-y-2">
+                {/* Male and Female Voices Dropdowns - Side by Side */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {/* Male Voices Dropdown */}
                   <Select 
                     value={selectedGender === 'male' ? selectedVoice : ''} 
                     onValueChange={(value) => {
@@ -303,10 +304,8 @@ export function Generator() {
                       ))}
                     </SelectContent>
                   </Select>
-                </div>
 
-                {/* Female Voices Dropdown */}
-                <div className="space-y-2">
+                  {/* Female Voices Dropdown */}
                   <Select 
                     value={selectedGender === 'female' ? selectedVoice : ''} 
                     onValueChange={(value) => {
