@@ -28,7 +28,7 @@ app = FastAPI(
 # Get allowed origins from environment variable or use defaults
 allowed_origins_str = os.getenv(
     "ALLOWED_ORIGINS",
-    "https://vocalise.vercel.app,http://localhost:5173, https://vocalera.vercel.app/"
+    "http://localhost:5173,https://vocalera.vercel.app"
 )
 ALLOWED_ORIGINS = [origin.strip() for origin in allowed_origins_str.split(",")]
 
