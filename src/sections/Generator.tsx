@@ -16,6 +16,7 @@ import {
   ChevronDown,
   Wand2,
   Info,
+  Globe,
 } from 'lucide-react';
 import { Slider } from '@/components/ui/slider';
 import { Textarea } from '@/components/ui/textarea';
@@ -36,6 +37,7 @@ export function Generator() {
   const [text, setText] = useState('');
   const [selectedVoice, setSelectedVoice] = useState('en-US-GuyNeural'); // Default to male voice
   const [selectedGender, setSelectedGender] = useState<'male' | 'female'>('male'); // Track which gender is selected
+  const [selectedLanguage, setSelectedLanguage] = useState('English'); // Default language
   const [rate, setRate] = useState([1]);
   const [pitch, setPitch] = useState([1]);
   const [volume, setVolume] = useState([1]);
@@ -48,9 +50,13 @@ export function Generator() {
   const generatorRef = useRef<HTMLDivElement>(null);
   const { generateSpeech, fetchVoices, isGenerating, error, voices, history, removeFromHistory, useWebSpeech } = useTTS();
 
-  // Separate voices by gender
-  const maleVoices = voices.filter(v => v.gender === 'male');
-  const femaleVoices = voices.filter(v => v.gender === 'female');
+  // Extract unique languages from voices
+  const availableLanguages = Array.from(new Set(voices.map(v => v.language.split('(')[0].trim()))).sort();
+
+  // Filter voices by selected language and gender
+  const filteredVoices = voices.filter(v => v.language.includes(selectedLanguage));
+  const maleVoices = filteredVoices.filter(v => v.gender === 'male');
+  const femaleVoices = filteredVoices.filter(v => v.gender === 'female');
 
   // Update selected gender when voice changes
   useEffect(() => {
@@ -59,6 +65,18 @@ export function Generator() {
       setSelectedGender(voice.gender as 'male' | 'female');
     }
   }, [selectedVoice, voices]);
+
+  // Reset voice selection when language changes
+  useEffect(() => {
+    if (filteredVoices.length > 0) {
+      // Try to find a male voice first, otherwise use first available
+      const defaultVoice = maleVoices[0] || femaleVoices[0];
+      if (defaultVoice && !filteredVoices.find(v => v.id === selectedVoice)) {
+        setSelectedVoice(defaultVoice.id);
+        setSelectedGender(defaultVoice.gender as 'male' | 'female');
+      }
+    }
+  }, [selectedLanguage, filteredVoices.length]);
 
   useEffect(() => {
     fetchVoices();
@@ -265,6 +283,30 @@ export function Generator() {
 
             {/* Right: Voice Controls */}
             <div className="space-y-6">
+              {/* Language Selection */}
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+                  <Globe className="w-4 h-4 text-[#453478]" />
+                  Select Language
+                </label>
+                <Select value={selectedLanguage} onValueChange={setSelectedLanguage}>
+                  <SelectTrigger className="bg-white border-2 border-gray-300 rounded-2xl h-12 text-gray-900 focus:border-[#453478] focus:ring-4 focus:ring-purple-100">
+                    <SelectValue placeholder="Choose a language" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-white border border-gray-300 rounded-2xl max-h-72">
+                    {availableLanguages.map((language) => (
+                      <SelectItem
+                        key={language}
+                        value={language}
+                        className="text-gray-900 hover:bg-[#EDE9F5] focus:bg-[#EDE9F5] rounded-xl mx-1 my-0.5"
+                      >
+                        {language}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
               {/* Voice Selection */}
               <div className="space-y-2">
                 <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
@@ -281,8 +323,9 @@ export function Generator() {
                       setSelectedVoice(value);
                       setSelectedGender('male');
                     }}
+                    disabled={maleVoices.length === 0}
                   >
-                    <SelectTrigger className="bg-white border-2 border-gray-300 rounded-2xl h-12 text-gray-900 focus:border-[#453478] focus:ring-4 focus:ring-purple-100">
+                    <SelectTrigger className="bg-white border-2 border-gray-300 rounded-2xl h-12 text-gray-900 focus:border-[#453478] focus:ring-4 focus:ring-purple-100 disabled:opacity-50 disabled:cursor-not-allowed">
                       <div className="flex items-center gap-2">
                         <span className="w-2 h-2 rounded-full bg-blue-400" />
                         <SelectValue placeholder="Choose a male voice" />
@@ -312,8 +355,9 @@ export function Generator() {
                       setSelectedVoice(value);
                       setSelectedGender('female');
                     }}
+                    disabled={femaleVoices.length === 0}
                   >
-                    <SelectTrigger className="bg-white border-2 border-gray-300 rounded-2xl h-12 text-gray-900 focus:border-[#453478] focus:ring-4 focus:ring-purple-100">
+                    <SelectTrigger className="bg-white border-2 border-gray-300 rounded-2xl h-12 text-gray-900 focus:border-[#453478] focus:ring-4 focus:ring-purple-100 disabled:opacity-50 disabled:cursor-not-allowed">
                       <div className="flex items-center gap-2">
                         <span className="w-2 h-2 rounded-full bg-pink-400" />
                         <SelectValue placeholder="Choose a female voice" />
