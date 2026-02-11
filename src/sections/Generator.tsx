@@ -22,9 +22,7 @@ import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
@@ -37,6 +35,7 @@ const MAX_CHARS = 5000;
 export function Generator() {
   const [text, setText] = useState('');
   const [selectedVoice, setSelectedVoice] = useState('en-US-GuyNeural'); // Default to male voice
+  const [selectedGender, setSelectedGender] = useState<'male' | 'female'>('male'); // Track which gender is selected
   const [rate, setRate] = useState([1]);
   const [pitch, setPitch] = useState([1]);
   const [volume, setVolume] = useState([1]);
@@ -52,6 +51,14 @@ export function Generator() {
   // Separate voices by gender
   const maleVoices = voices.filter(v => v.gender === 'male');
   const femaleVoices = voices.filter(v => v.gender === 'female');
+
+  // Update selected gender when voice changes
+  useEffect(() => {
+    const voice = voices.find(v => v.id === selectedVoice);
+    if (voice) {
+      setSelectedGender(voice.gender as 'male' | 'female');
+    }
+  }, [selectedVoice, voices]);
 
   useEffect(() => {
     fetchVoices();
@@ -264,52 +271,73 @@ export function Generator() {
                   <Mic className="w-4 h-4 text-[#453478]" />
                   Select Voice
                 </label>
-                <Select value={selectedVoice} onValueChange={setSelectedVoice}>
-                  <SelectTrigger className="bg-white border-2 border-gray-200 rounded-2xl h-12 text-gray-900 focus:border-[#453478] focus:ring-4 focus:ring-purple-100">
-                    <SelectValue placeholder="Choose a voice" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-white border border-gray-200 rounded-2xl max-h-72">
-                    {/* Male Voices Section */}
-                    {maleVoices.length > 0 && (
-                      <SelectGroup>
-                        <SelectLabel className="text-blue-600 font-semibold">Male Voices</SelectLabel>
-                        {maleVoices.map((voice) => (
-                          <SelectItem
-                            key={voice.id}
-                            value={voice.id}
-                            className="text-gray-900 hover:bg-[#EDE9F5] focus:bg-[#EDE9F5] rounded-xl mx-1 my-0.5"
-                          >
-                            <div className="flex items-center gap-2">
-                              <span className="w-2 h-2 rounded-full bg-blue-400" />
-                              <span>{voice.name}</span>
-                              <span className="text-gray-400 text-xs">({voice.accent})</span>
-                            </div>
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                    )}
-                    
-                    {/* Female Voices Section */}
-                    {femaleVoices.length > 0 && (
-                      <SelectGroup>
-                        <SelectLabel className="text-pink-600 font-semibold">Female Voices</SelectLabel>
-                        {femaleVoices.map((voice) => (
-                          <SelectItem
-                            key={voice.id}
-                            value={voice.id}
-                            className="text-gray-900 hover:bg-[#EDE9F5] focus:bg-[#EDE9F5] rounded-xl mx-1 my-0.5"
-                          >
-                            <div className="flex items-center gap-2">
-                              <span className="w-2 h-2 rounded-full bg-pink-400" />
-                              <span>{voice.name}</span>
-                              <span className="text-gray-400 text-xs">({voice.accent})</span>
-                            </div>
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                    )}
-                  </SelectContent>
-                </Select>
+                
+                {/* Male Voices Dropdown */}
+                <div className="space-y-2">
+                  <Select 
+                    value={selectedGender === 'male' ? selectedVoice : ''} 
+                    onValueChange={(value) => {
+                      setSelectedVoice(value);
+                      setSelectedGender('male');
+                    }}
+                  >
+                    <SelectTrigger className="bg-white border-2 border-gray-200 rounded-2xl h-12 text-gray-900 focus:border-[#453478] focus:ring-4 focus:ring-purple-100">
+                      <div className="flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-blue-400" />
+                        <SelectValue placeholder="Choose a male voice" />
+                      </div>
+                    </SelectTrigger>
+                    <SelectContent className="bg-white border border-gray-200 rounded-2xl max-h-72">
+                      {maleVoices.map((voice) => (
+                        <SelectItem
+                          key={voice.id}
+                          value={voice.id}
+                          className="text-gray-900 hover:bg-[#EDE9F5] focus:bg-[#EDE9F5] rounded-xl mx-1 my-0.5"
+                        >
+                          <div className="flex items-center gap-2">
+                            <span className="w-2 h-2 rounded-full bg-blue-400" />
+                            <span>{voice.name}</span>
+                            <span className="text-gray-400 text-xs">({voice.accent})</span>
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Female Voices Dropdown */}
+                <div className="space-y-2">
+                  <Select 
+                    value={selectedGender === 'female' ? selectedVoice : ''} 
+                    onValueChange={(value) => {
+                      setSelectedVoice(value);
+                      setSelectedGender('female');
+                    }}
+                  >
+                    <SelectTrigger className="bg-white border-2 border-gray-200 rounded-2xl h-12 text-gray-900 focus:border-[#453478] focus:ring-4 focus:ring-purple-100">
+                      <div className="flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-pink-400" />
+                        <SelectValue placeholder="Choose a female voice" />
+                      </div>
+                    </SelectTrigger>
+                    <SelectContent className="bg-white border border-gray-200 rounded-2xl max-h-72">
+                      {femaleVoices.map((voice) => (
+                        <SelectItem
+                          key={voice.id}
+                          value={voice.id}
+                          className="text-gray-900 hover:bg-[#EDE9F5] focus:bg-[#EDE9F5] rounded-xl mx-1 my-0.5"
+                        >
+                          <div className="flex items-center gap-2">
+                            <span className="w-2 h-2 rounded-full bg-pink-400" />
+                            <span>{voice.name}</span>
+                            <span className="text-gray-400 text-xs">({voice.accent})</span>
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
                 {selectedVoiceData && (
                   <p className="text-xs text-gray-500">
                     {selectedVoiceData.language} • {selectedVoiceData.gender === 'female' ? 'Female' : 'Male'} voice
