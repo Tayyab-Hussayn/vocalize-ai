@@ -273,7 +273,7 @@ export function Generator() {
                 </label>
                 
                 {/* Male and Female Voices Dropdowns - Side by Side */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="flex flex-col sm:flex-row gap-2">
                   {/* Male Voices Dropdown */}
                   <Select 
                     value={selectedGender === 'male' ? selectedVoice : ''} 
