@@ -197,7 +197,7 @@ export function Generator() {
                   value={text}
                   onChange={(e) => setText(e.target.value)}
                   placeholder="Type or paste your text here..."
-                  className="min-h-[280px] resize-none bg-white border-2 border-gray-200 rounded-2xl text-gray-900 placeholder:text-gray-400 focus:border-[#453478] focus:ring-4 focus:ring-purple-100 scrollbar-thin"
+                  className="min-h-[280px] resize-none bg-white border-2 border-gray-300 rounded-2xl text-gray-900 placeholder:text-gray-400 focus:border-[#453478] focus:ring-4 focus:ring-purple-100 scrollbar-thin"
                   maxLength={MAX_CHARS + 100}
                 />
                 
@@ -273,7 +273,7 @@ export function Generator() {
                 </label>
                 
                 {/* Male and Female Voices Dropdowns - Side by Side */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {/* Male Voices Dropdown */}
                   <Select 
                     value={selectedGender === 'male' ? selectedVoice : ''} 
@@ -282,13 +282,13 @@ export function Generator() {
                       setSelectedGender('male');
                     }}
                   >
-                    <SelectTrigger className="bg-white border-2 border-gray-200 rounded-2xl h-12 text-gray-900 focus:border-[#453478] focus:ring-4 focus:ring-purple-100">
+                    <SelectTrigger className="bg-white border-2 border-gray-300 rounded-2xl h-12 text-gray-900 focus:border-[#453478] focus:ring-4 focus:ring-purple-100">
                       <div className="flex items-center gap-2">
                         <span className="w-2 h-2 rounded-full bg-blue-400" />
                         <SelectValue placeholder="Choose a male voice" />
                       </div>
                     </SelectTrigger>
-                    <SelectContent className="bg-white border border-gray-200 rounded-2xl max-h-72">
+                    <SelectContent className="bg-white border border-gray-300 rounded-2xl max-h-72">
                       {maleVoices.map((voice) => (
                         <SelectItem
                           key={voice.id}
@@ -313,13 +313,13 @@ export function Generator() {
                       setSelectedGender('female');
                     }}
                   >
-                    <SelectTrigger className="bg-white border-2 border-gray-200 rounded-2xl h-12 text-gray-900 focus:border-[#453478] focus:ring-4 focus:ring-purple-100">
+                    <SelectTrigger className="bg-white border-2 border-gray-300 rounded-2xl h-12 text-gray-900 focus:border-[#453478] focus:ring-4 focus:ring-purple-100">
                       <div className="flex items-center gap-2">
                         <span className="w-2 h-2 rounded-full bg-pink-400" />
                         <SelectValue placeholder="Choose a female voice" />
                       </div>
                     </SelectTrigger>
-                    <SelectContent className="bg-white border border-gray-200 rounded-2xl max-h-72">
+                    <SelectContent className="bg-white border border-gray-300 rounded-2xl max-h-72">
                       {femaleVoices.map((voice) => (
                         <SelectItem
                           key={voice.id}
