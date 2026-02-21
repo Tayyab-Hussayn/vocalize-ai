@@ -1,0 +1,286 @@
+<!-- Techspirex Services: The Perfect Mosaic -->
+<style>
+    /* =========================================
+       VARIABLES
+       ========================================= */
+    :root {
+        --tsp-bg-dark: #0f0f12;
+        --tsp-card-bg: #13131a;
+        --tsp-primary: #453478;
+        --tsp-accent: #00d2ff;
+        --tsp-accent-purple: #8b5cf6;
+        --tsp-text-muted: #94a3b8;
+    }
+
+    /* =========================================
+       SECTION LAYOUT
+       ========================================= */
+    .tsp-mosaic-section {
+        background-color: var(--tsp-bg-dark);
+        padding: 140px 20px;
+        font-family: 'Inter', sans-serif;
+        overflow: hidden;
+    }
+
+    .tsp-mosaic-container {
+        max-width: 1280px;
+        margin: 0 auto;
+    }
+
+    /* Header */
+    .tsp-mosaic-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 60px;
+    }
+
+    .tsp-mosaic-title {
+        font-family: 'Outfit', sans-serif;
+        font-size: 56px; font-weight: 800; color: white; margin: 0;
+        line-height: 1; letter-spacing: -1.5px;
+    }
+
+    .tsp-mosaic-link {
+        font-family: 'Fira Code', monospace;
+        font-size: 13px; color: var(--tsp-accent); text-decoration: none;
+        border-bottom: 1px solid rgba(0, 210, 255, 0.3);
+        padding-bottom: 4px; transition: all 0.3s ease;
+        /* Icon adjustment */
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;background: rgba(0, 210, 255, 0.05);border:1px solid #00d2ff;padding:6px 12px;border-radius:30px;
+    }
+    .tsp-mosaic-link:hover { border-color: var(--tsp-accent); color: white; }
+
+    /* Gear Icon Style */
+    .tsp-gear-icon {
+        width: 16px;
+        height: 16px;
+    }
+
+    /* =========================================
+       THE MOSAIC GRID (FIXED LAYOUT)
+       ========================================= */
+    .tsp-mosaic-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-auto-rows: 280px;
+        gap: 24px;
+    }
+
+    /* CARD STYLING */
+    .tsp-tile {
+        background-color: var(--tsp-card-bg);
+        border-radius: 24px;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 36px;
+        text-decoration: none;
+        transition: transform 0.3s ease;
+        border: 1px solid #453478;
+    }
+
+    /* Hover State */
+    .tsp-tile:hover {
+        transform: translateY(-5px);
+        background-color: #161622;
+        border-color:#00d2ff;
+    }
+
+    /* --- THE BACKGROUND ICONS --- */
+    .tsp-bg-icon {
+    position: absolute;
+    right: -20px;
+    bottom: -20px;
+    width: 140px;
+    height: 140px;
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 0;
+    transition: all 0.5s ease;
+    transform: rotate(-10deg);
+    object-fit: contain;
+    filter: brightness(0) invert(1); /* Makes images white */
+    }
+
+    .tsp-tile:hover .tsp-bg-icon {
+        opacity: 0.06;
+        transform: rotate(0deg) scale(1.1);
+    }
+
+    /* CONTENT STYLING */
+    .tsp-tile-content {
+        position: relative; z-index: 2; height: 100%;
+        display: flex; flex-direction: column; justify-content: space-between;
+    }
+
+    .tsp-tile-top { display: flex; justify-content: space-between; align-items: flex-start; }
+    
+    .tsp-tile-icon-box {
+        width:54px; height: 54px;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid #453478;
+        border-radius: 30px;
+        display: flex; align-items: center; justify-content: center;
+        color: white; transition: all 0.3s ease;
+    }
+    
+    .tsp-tile-icon-box img {
+        width:35px; 
+        height:35px;
+        filter: invert(1) brightness(200%);
+    }
+
+    .tsp-tile:hover .tsp-tile-icon-box { border-color: #00d2ff; }
+    .tsp-tile:hover .tsp-tile-icon-box img { filter: invert(1); }
+
+    .tsp-tile-num {
+        font-family: 'Fira Code', monospace; font-size: 12px; color: #453478;
+    }
+    .tsp-tile:hover .tsp-tile-num { color:#00d2ff; }
+
+    .tsp-tile-title {
+        font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 700; color: white; margin: 0 0 8px 0;
+    }
+    .tsp-tile-desc {
+        font-size: 14px; color: var(--tsp-text-muted); line-height: 1.6; margin: 0;
+        opacity: 0.8; transition: opacity 0.3s ease;
+    }
+    .tsp-tile:hover .tsp-tile-desc { opacity: 1; color: white; }
+
+    /* LAYOUT SPANS */
+    .tsp-span-wide { grid-column: span 2; }
+    .tsp-span-std { grid-column: span 1; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+        .tsp-mosaic-grid { grid-template-columns: 1fr; grid-auto-rows: auto; }
+        .tsp-span-wide { grid-column: span 1; }
+        .tsp-tile { min-height: 260px; }
+    }
+</style>
+
+<section class="tsp-mosaic-section">
+    <div class="tsp-mosaic-container">
+        
+        <div class="tsp-mosaic-header">
+            <h2 class="tsp-mosaic-title">Holistic<br>Capabilities.</h2>
+            <!-- Updated Link: Icon added on left, slashes removed -->
+            <a href="/services" class="tsp-mosaic-link">
+             <svg class="tsp-gear-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                EXPLORE ALL
+            </a>
+        </div>
+
+        <div class="tsp-mosaic-grid">
+            
+            <!-- 1. Web Development (Wide) -->
+            <a href="/services/web-development" class="tsp-tile tsp-span-wide">
+                <img src="https://cdn-icons-png.flaticon.com/128/1336/1336494.png" alt="" class="tsp-bg-icon">
+                <div class="tsp-tile-content">
+                    <div class="tsp-tile-top">
+                        <div class="tsp-tile-icon-box">
+                            <img src="https://cdn-icons-png.flaticon.com/128/1336/1336494.png">
+                        </div>
+                        <span class="tsp-tile-num">01</span>
+                    </div>
+                    <div>
+                        <h3 class="tsp-tile-title">Web Development</h3>
+                        <p class="tsp-tile-desc">Scalable, cloud-native web architectures built on Next.js and React. Engineered for speed and SEO.</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 2. AI & Automation (Small) -->
+            <a href="/services/ai-solutions" class="tsp-tile tsp-span-std">
+                <img src="https://cdn-icons-png.flaticon.com/512/17653/17653338.png" alt="" class="tsp-bg-icon">
+                <div class="tsp-tile-content">
+                    <div class="tsp-tile-top">
+                        <div class="tsp-tile-icon-box">
+                            <img src="https://cdn-icons-png.flaticon.com/128/17756/17756943.png">
+                        </div>
+                        <span class="tsp-tile-num">02</span>
+                    </div>
+                    <div>
+                        <h3 class="tsp-tile-title">AI & Automation</h3>
+                        <p class="tsp-tile-desc">Custom LLM agents and workflows.</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 3. UI/UX Design (Small) -->
+            <a href="/services/ui-ux" class="tsp-tile tsp-span-std">
+                <img src="https://cdn-icons-png.flaticon.com/512/7889/7889802.png" alt="" class="tsp-bg-icon">
+                <div class="tsp-tile-content">
+                    <div class="tsp-tile-top">
+                        <div class="tsp-tile-icon-box">
+                            <img src="https://cdn-icons-png.flaticon.com/128/17109/17109631.png">
+                        </div>
+                        <span class="tsp-tile-num">03</span>
+                    </div>
+                    <div>
+                        <h3 class="tsp-tile-title">UI/UX Design</h3>
+                        <p class="tsp-tile-desc">Pixel-perfect interfaces driving conversion.</p>
+                    </div>
+                </div>
+            </a>
+            
+            <!-- 4. DevOps & Cloud (Wide) -->
+            <a href="/services/devops-cloud" class="tsp-tile tsp-span-wide">
+                <img src="https://cdn-icons-png.flaticon.com/512/16954/16954963.png" alt="" class="tsp-bg-icon">
+                <div class="tsp-tile-content">
+                    <div class="tsp-tile-top">
+                        <div class="tsp-tile-icon-box">
+                           <img src="https://cdn-icons-png.flaticon.com/128/5266/5266248.png">
+                        </div>
+                        <span class="tsp-tile-num">04</span>
+                    </div>
+                    <div>
+                        <h3 class="tsp-tile-title">DevOps & Cloud</h3>
+                        <p class="tsp-tile-desc">Secure, self-healing infrastructure on AWS and Azure. CI/CD pipelines.</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 5. Digital Marketing (Wide) -->
+            <a href="/services/digital-marketing" class="tsp-tile tsp-span-wide">
+                <img src="https://cdn-icons-png.flaticon.com/512/9552/9552454.png" alt="" class="tsp-bg-icon">
+                <div class="tsp-tile-content">
+                    <div class="tsp-tile-top">
+                        <div class="tsp-tile-icon-box">
+                           <img src="https://cdn-icons-png.flaticon.com/128/3749/3749988.png">
+                        </div>
+                        <span class="tsp-tile-num">05</span>
+                    </div>
+                    <div>
+                        <h3 class="tsp-tile-title">Digital Marketing</h3>
+                        <p class="tsp-tile-desc">Data-driven SEO and PPC campaigns that maximize ROAS.</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 6. E-commerce (Small) -->
+            <a href="/services/ecommerce" class="tsp-tile tsp-span-std">
+                <img src="https://cdn-icons-png.flaticon.com/512/9018/9018922.png" alt="" class="tsp-bg-icon">
+                <div class="tsp-tile-content">
+                    <div class="tsp-tile-top">
+                        <div class="tsp-tile-icon-box">
+                           <img src="https://cdn-icons-png.flaticon.com/128/9018/9018922.png">
+                        </div>
+                        <span class="tsp-tile-num">06</span>
+                    </div>
+                    <div>
+                        <h3 class="tsp-tile-title">E-commerce</h3>
+                        <p class="tsp-tile-desc">Headless Shopify Scale.</p>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+    </div>
+</section>
